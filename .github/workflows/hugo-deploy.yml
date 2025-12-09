@@ -6,7 +6,7 @@ on:
   push:
     branches:
       - main
-  
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -48,6 +48,20 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
+      - name: Update submodules
+        run: |
+          git submodule update --init --recursive
+          git submodule foreach git pull origin master
+
+      - name: Ensure theme exists
+        run: |
+          if [ ! -d "themes/hugo-theme-learn" ] || [ -z "$(ls -A themes/hugo-theme-learn)" ]; then
+            echo "Theme not found, cloning directly..."
+            rm -rf themes/hugo-theme-learn
+            git clone https://github.com/matcornic/hugo-theme-learn.git themes/hugo-theme-learn
+          fi
+          ls -la themes/hugo-theme-learn/
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
@@ -82,3 +96,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          timeout: 600000
+          error_count: 10
+          reporting_interval: 5000
