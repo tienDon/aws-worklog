@@ -55,12 +55,32 @@ jobs:
 
       - name: Ensure theme exists
         run: |
+          echo "Current directory structure:"
+          ls -la
+          echo "Themes directory:"
+          ls -la themes/ || echo "themes/ doesn't exist"
+          echo "Hugo-theme-learn in root:"
+          ls -la hugo-theme-learn/ || echo "hugo-theme-learn/ doesn't exist"
+
+          # Copy theme to correct location
+          if [ -d "hugo-theme-learn" ]; then
+            echo "Copying hugo-theme-learn to themes/"
+            mkdir -p themes
+            cp -r hugo-theme-learn themes/
+          fi
+
+          # Also ensure git submodule is properly initialized
           if [ ! -d "themes/hugo-theme-learn" ] || [ -z "$(ls -A themes/hugo-theme-learn)" ]; then
-            echo "Theme not found, cloning directly..."
+            echo "Theme not found in themes/, cloning directly..."
+            mkdir -p themes
             rm -rf themes/hugo-theme-learn
             git clone https://github.com/matcornic/hugo-theme-learn.git themes/hugo-theme-learn
           fi
+
+          echo "Final theme check:"
           ls -la themes/hugo-theme-learn/
+          echo "Theme layouts:"
+          ls -la themes/hugo-theme-learn/layouts/ || echo "No layouts found"
 
       - name: Setup Pages
         id: pages
@@ -75,9 +95,16 @@ jobs:
           HUGO_ENVIRONMENT: production
           TZ: UTC
         run: |
+          echo "Hugo version:"
+          hugo version
+          echo "Theme check:"
+          ls -la themes/hugo-theme-learn/
+          echo "Config check:"
+          cat config.toml
           hugo \
             --gc \
             --minify \
+            --verbose \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
 
       - name: Upload artifact
