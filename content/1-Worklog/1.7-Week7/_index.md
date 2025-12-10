@@ -25,7 +25,7 @@ To advance Frontend Development skills (React) and learn Backend Deployment on A
 | 5   | **Security Review (Networking):** Reviewing Security Groups, NACLs, and researching WAF (Web Application Firewall)     | 10/24/2025 | 10/24/2025 |                                   |
 | 6   | **Summary & Optimization:** Testing, optimizing the deployed application on EB, and writing the weekly report          | 10/25/2025 | 10/25/2025 |                                   |
 
-### Achievements: ✅
+### Achievements:
 
 - **React:** Mastered the use of **React Query** for efficient data management and reduced State code.
 - **Deployment:** Successfully deployed a Node.js application onto **Elastic Beanstalk**.

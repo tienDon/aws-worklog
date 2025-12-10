@@ -6,129 +6,341 @@ chapter: false
 pre: " <b> 3.1. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
+# Modernizing your application isn't difficult: Migrating to Amazon EKS with your existing NLB configuration
 
-# Getting Started with Healthcare Data Lakes: Using Microservices
+**Authors:**
 
-Data lakes can help hospitals and healthcare facilities turn data into business insights, maintain business continuity, and protect patient privacy. A **data lake** is a centralized, managed, and secure repository to store all your data, both in its raw and processed forms for analysis. Data lakes allow you to break down data silos and combine different types of analytics to gain insights and make better business decisions.
+- Henrique Santana, Container Specialist, AWS
 
-This blog post is part of a larger series on getting started with setting up a healthcare data lake. In my final post of the series, _“Getting Started with Healthcare Data Lakes: Diving into Amazon Cognito”_, I focused on the specifics of using Amazon Cognito and Attribute Based Access Control (ABAC) to authenticate and authorize users in the healthcare data lake solution. In this blog, I detail how the solution evolved at a foundational level, including the design decisions I made and the additional features used. You can access the code samples for the solution in this Git repo for reference.
+- Luis Felipe, Core Solution Architect, AWS
 
----
+_Date: March 25, 2025_
 
-## Architecture Guidance
+<style>
+body {
+font-family: "Times New Roman", Times, serif;
 
-The main change since the last presentation of the overall architecture is the decomposition of a single service into a set of smaller services to improve maintainability and flexibility. Integrating a large volume of diverse healthcare data often requires specialized connectors for each format; by keeping them encapsulated separately as microservices, we can add, remove, and modify each connector without affecting the others. The microservices are loosely coupled via publish/subscribe messaging centered in what I call the “pub/sub hub.”
+font-size: 13px;
 
-This solution represents what I would consider another reasonable sprint iteration from my last post. The scope is still limited to the ingestion and basic parsing of **HL7v2 messages** formatted in **Encoding Rules 7 (ER7)** through a REST interface.
+}
 
-**The solution architecture is now as follows:**
+h1 {
+font-size: 24px;
 
-> _Figure 1. Overall architecture; colored boxes represent distinct services._
+}
 
----
+h2 {
+font-size: 18px;
 
-While the term _microservices_ has some inherent ambiguity, certain traits are common:
+}
 
-- Small, autonomous, loosely coupled
-- Reusable, communicating through well-defined interfaces
-- Specialized to do one thing well
-- Often implemented in an **event-driven architecture**
+h3 {
+font-size: 16px;
 
-When determining where to draw boundaries between microservices, consider:
+}
 
-- **Intrinsic**: technology used, performance, reliability, scalability
-- **Extrinsic**: dependent functionality, rate of change, reusability
-- **Human**: team ownership, managing _cognitive load_
+</style>
 
----
+## Introduction
 
-## Technology Choices and Communication Scope
+Many organizations have built their infrastructure using [Amazon Elastic Compute Cloud (Amazon EC2)](https://aws.amazon.com/ec2/) and [Network Load Balancer (NLB)](https://aws.amazon.com/elasticloadbalancing/network-load-balancer/), often with security policies built around the NLB's static IP address. When these organizations adopt containerization and switch to [Amazon Elastic Kubernetes Service (Amazon EKS)](https://aws.amazon.com/eks/) for their modern applications, they face a significant challenge in maintaining their existing endpoint configuration. This can make modernization complicated and risky, as changes to load balancing configurations can disrupt client connectivity or require major DNS changes.
 
-| Communication scope                       | Technologies / patterns to consider                                                        |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Within a single microservice              | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Between microservices in a single service | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Between services                          | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+The good news is that this transition doesn't necessarily have to be an all-or-nothing effort. In this post, we explore a [hybrid deployment pattern](https://aws.amazon.com/blogs/containers/patterns-for-targetgroupbinding-with-aws-load-balancer-controller/) that provides a smooth, low-risk migration path from Amazon EC2 to Amazon EKS.
 
----
+## Hybrid Deployment
 
-## The Pub/Sub Hub
+Similar to the [blue/green deployment pattern](https://docs.aws.amazon.com/whitepapers/latest/overview-deployment-options/bluegreen-deployments.html), our hybrid deployment approach supports running the application concurrently on Amazon EKS and Amazon EC2 during the migration. The key to this strategy is the ability to route traffic through your existing load balancer to both deployments using TargetGroupBinding, resulting in a controlled migration process.
 
-Using a **hub-and-spoke** architecture (or message broker) works well with a small number of tightly related microservices.
+### Architecture
 
-- Each microservice depends only on the _hub_
-- Inter-microservice connections are limited to the contents of the published message
-- Reduces the number of synchronous calls since pub/sub is a one-way asynchronous _push_
+![Figure 1: Traffic flow diagram showing migration from Amazon EC2 (green) to Amazon EKS (blue)](https://d2908q01vomqb2.cloudfront.net/fe2ef495a1152561572949784c16bf23abb28057/2025/03/18/Picture1-8.png)
 
-Drawback: **coordination and monitoring** are needed to avoid microservices processing the wrong message.
+_Figure 1: Traffic flow diagram showing migration from Amazon EC2 (green) to Amazon EKS (blue)_
 
----
+## Advantages of using a hybrid deployment approach {: style="font-size: 18px;"}
 
-## Core Microservice
+The hybrid deployment approach offers the following advantages:
 
-Provides foundational data and communication layer, including:
+• **Controlled migration:** Gradually route traffic to the EKS workload while maintaining service through the existing EC2 infrastructure With your own approach, significantly reduce migration risk.
 
-- **Amazon S3** bucket for data
-- **Amazon DynamoDB** for data catalog
-- **AWS Lambda** to write messages into the data lake and catalog
-- **Amazon SNS** topic as the _hub_
-- **Amazon S3** bucket for artifacts such as Lambda code
+• **Simple Rollback:** Quickly redirect traffic back to EC2 instances if issues arise, providing reliable rollback during migration.
 
-> Only allow indirect write access to the data lake through a Lambda function → ensures consistency.
+• **A/B Testing:** Compare performance between EC2 and EKS deployments under real-world conditions, providing data-driven decisions on the most efficient configuration and resource allocation.
 
----
+• **Flexibility:** Leverage the strengths of both deployment environments during the migration, optimizing workload placement based on specific requirements.
 
-## Front Door Microservice
+• **Minimized Service Interruption:** Reduce downtime risk by running both environments concurrently during migration.
 
-- Provides an API Gateway for external REST interaction
-- Authentication & authorization based on **OIDC** via **Amazon Cognito**
-- Self-managed _deduplication_ mechanism using DynamoDB instead of SNS FIFO because:
-  1. SNS deduplication TTL is only 5 minutes
-  2. SNS FIFO requires SQS FIFO
-  3. Ability to proactively notify the sender that the message is a duplicate
+• **Risk Reduction:** Validate containerized deployments with real traffic while maintaining fallback options, providing business continuity.
 
----
+## Prerequisites for Migration
 
-## Staging ER7 Microservice
+This post is written assuming you have a basic understanding of Docker containerization and Kubernetes concepts (pods, events, namespaces, and deployments, etc.).
 
-- Lambda “trigger” subscribed to the pub/sub hub, filtering messages by attribute
-- Step Functions Express Workflow to convert ER7 → JSON
-- Two Lambdas:
-  1. Fix ER7 formatting (newline, carriage return)
-  2. Parsing logic
-- Result or error is pushed back into the pub/sub hub
+Before beginning the migration process, ensure you have the following components available:
 
----
+• **Existing Infrastructure:** In our example, a [Retail Store sample application](https://github.com/aws-containers/retail-store-sample-app) is running on Amazon EC2.
 
-## New Features in the Solution
+• **Container Requirements:** A tested and containerized application, with the container image pushed to the container registry, such as [Amazon Elastic Container Registry (Amazon ECR)](https://aws.amazon.com/ecr/).
 
-### 1. AWS CloudFormation Cross-Stack References
+• **Amazon EKS Environment:** [EKS cluster with supported Kubernetes version](https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html#available-versions) across multiple [Availability Zones (AZs)](https://aws.amazon.com/about-aws/global-infrastructure/regions_az/).
 
-Example _outputs_ in the core microservice:
+• **Tools:**
+◦ [kubectl](https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html) has been installed and configured to interact with the Amazon EKS cluster.
+
+◦ [AWS Command Line Interface (AWS CLI)](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) has been installed and configured with the appropriate [AWS Identity and Access Management (IAM)](https://aws.amazon.com/iam/).
+◦ [AWS Load Balancer Controller](https://docs.aws.amazon.com/eks/latest/userguide/lbc-helm.html) has been installed on the Amazon EKS cluster.
+
+## Migrate your application using a hybrid deployment with NLB {: style="font-size: 18px;"}
+
+### Detailed migration steps {: style="font-size: 16px;"}
+
+The first step is to create a new target group:
+
+```bash
+TARGET_GROUP_ARN=$(aws elbv2 create-target-group \
+
+--name eks-green \
+
+--protocol TCP \
+
+--port 80 \
+
+--target-type ip \
+
+--vpc-id <VPCID> \
+
+--query 'TargetGroups[0].TargetGroupArn' \
+
+--output text)
+```
+
+The ARN (Amazon Resource Name) of the target group is stored in the TARGET_GROUP_ARN variable. Next, verify that both target groups (Amazon EC2 and Amazon EKS) are configured with `Terminate connections on deregistration` set to true.
+
+```bash
+aws elbv2 describe-target-group-attributes \
+
+--target-group-arn $TARGET_GROUP_ARN \
+
+--query 'Attributes[*]' --output text | \
+
+grep deregistration_delay.connection_termination.enabled
+```
+
+Observe the following output:
+
+`deregistration_delay.connection_termination.enabled true`
+
+If the command output returns `false`, it means this feature is not enabled. To enable it, use the following command:
+
+```bash
+aws elbv2 modify-target-group-attributes \
+
+--target-group-arn $TARGET_GROUP_ARN \
+
+--attributes 'Key=deregistration_delay.connection_termination.enabled,Value=true' \
+
+--query 'Attributes[*]' --output text | \
+
+grep deregistration_delay.connection_termination.enabled
+```
+
+At this stage, traffic is still directed to the application running on Amazon EC2. Now you can deploy the containerized application on the Amazon EKS cluster:
+
+```bash
+kubectl create deployment myapp \
+
+--image public.ecr.aws/aws-containers/retail-store-sample-ui:0.8.1 \
+
+--replicas 2 --port=8080
+```
+
+We can expose the application by creating a service. This is the YAML file for the service:
 
 ```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+cat << EOF > service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+
+labels:
+app: myapp
+name: ui-service
+namespace: default
+spec:
+ports:
+
+- port: 80
+targetPort: 8080
+selector:
+
+app: myapp
+type: ClusterIP
+EOF
 ```
+
+We can apply it:
+
+```bash
+kubectl apply -f service.yaml
+```
+
+With the application running and exposed as a Kubernetes service, create a new listener for the existing NLB:
+
+```bash
+aws elbv2 create-listener \
+
+--load-balancer-arn <NLB-ARN> \
+
+--protocol TCP --port 81 \
+
+--default-actions Type=forward,TargetGroupArn=$TARGET_GROUP_ARN
+```
+
+Currently, you have a listener on port 80. This listener continues to forward traffic to the target group associated with EC2 instances. The newly created listener forwards traffic to the target group associated with Amazon EKS. It doesn't have any target until you use TargetGroupBinding to bind the service to the new target group. We can create it:
+
+```yaml
+cat << EOF > tg-binding.yaml
+apiVersion: elbv2.k8s.aws/v1beta1
+kind: TargetGroupBinding
+metadata:
+
+name: ui-tgbinding
+spec:
+
+serviceRef:
+
+name: ui-service # Service name
+port: 80 # Service port
+targetGroupARN: $TARGET_GROUP_ARN
+EOF
+```
+
+Apply manifest:
+
+```bash
+kubectl apply -f tg-binding.yaml
+```
+
+You can verify that the targets are properly registered to the Amazon EKS target group. Give the targets enough time to pass the health check, then verify that the new targets can successfully serve traffic. If the health check fails, verify that the Amazon EKS node's Security Group allows the necessary traffic. To confirm proper functionality, try accessing the application through the new listener to ensure it's being served as intended before proceeding with the addition.
+
+Before starting the migration, you need to create another listener pointing to the existing EC2 target group:
+
+```bash
+aws elbv2 create-listener \
+
+--load-balancer-arn <NLB-ARN> \
+
+--protocol TCP --port 82 \
+
+--default-actions Type=forward,TargetGroupArn=<EC2-TARGET-GROUP-ARN>
+```
+
+After this step, NLB has three listeners (ports 80, 81, and 82), where you've created two more listeners to perform the smooth traffic migration. The port numbers used in this post are examples, and you can choose port numbers to reflect your application's needs. We recommend checking if traffic to existing target groups is being served on the new listener. This ensures that the NLB configuration is ready to proceed with the next steps.
+
+### Moving traffic from Amazon EC2 to Amazon EKS target group {: style="font-size: 16px;"}
+
+Both target groups are healthy, and all listeners are ready to handle traffic, so it's time to move the traffic. First, configure the existing listener on port 80 to send traffic to the `eks-green` target group:
+
+```bash
+aws elbv2 modify-listener \
+
+--listener-arn <NLB-Listen-80> \
+
+--default-actions Type=forward,TargetGroupArn=$TARGET_GROUP_ARN
+```
+
+Changing this configuration ensures that all new flows are redirected to the new target group. Because the targets passed their health check when linked to the listener on port 81, this helps
+This will speed up the process.
+
+This listener change may take a few minutes to propagate. Therefore, we recommend monitoring traffic going to targets in the new target group before proceeding with the next steps. During this time, it's important to monitor your application's behavior and performance metrics. You can monitor the target's health status using:
+
+```bash
+aws elbv2 describe-target-health \
+
+--target-group-arn $TARGET_GROUP_ARN
+```
+
+While existing connections will not be affected, new connections will stop routing to the old target group after the traffic migration is complete. After confirming that the new targets are successfully handling traffic and that the previously existing targets are no longer serving traffic, retrieve a list of targets from the previously existing EC2 target group to prepare for deregistration:
+
+```bash
+aws elbv2 describe-target-health \
+
+--target-group-arn <EC2-TARGET-GROUP-ARN> \
+
+--query 'TargetHealthDescriptions[*].Target.Id' \
+
+--output text
+```
+
+This command outputs a list of instance IDs. For each instance ID, run the `deregister-targets` command:
+
+```bash
+aws elbv2 deregister-targets \
+
+--target-group-arn <EC2-TARGET-GROUP-ARN> \
+
+--targets Id=<InstanceID>
+```
+
+The deregistration step is crucial because the EC2 target group remains associated with NLB via the port 82 listener. When executed, the deregister-targets call performs a `Connection termination on deregistration`, which terminates existing connections to the old targets. When clients reconnect, they are routed to the targets of the new Amazon EKS target group.
+
+### Rollback to Original Target Group Procedure (If Needed) {: style="font-size: 16px;"}
+
+If you need to roll back to the original EC2 target group, follow these steps:
+
+1. Re-register all original targets to the EC2 target group:
+
+```bash
+aws elbv2 register-targets \
+
+--target-group-arn <EC2-TARGET-GROUP-ARN> \
+
+--targets Id=<InstanceID1> Id=<InstanceID2>
+```
+
+2. Wait for the targets to pass the health check. Monitor their health status:
+
+```bash
+aws elbv2 describe-target-health \
+
+--target-group-arn <EC2-TARGET-GROUP-ARN>
+```
+
+3. Reconfigure the listener on port 80 on NLB to send traffic to the target group EC2:
+
+```bash
+aws elbv2 modify-listener \
+
+--listener-arn <NLB-Listen-80> \
+
+--default-actions Type=forward,TargetGroupArn=<EC2-TARGET-GROUP-ARN>
+```
+
+### Cleanup after migration {: style="font-size: 16px;"}
+
+If the migration was successful (no rollback needed), then you can proceed with cleanup operations. This includes deleting the two additional listeners you created on ports 81 and 82, as they were only necessary for the migration process. Finally, you can safely delete the EC2 target group, as it no longer receives any traffic.
+
+```bash
+aws elbv2 delete-listener \
+
+--listener-arn <Listen-Port81-ARN>
+
+aws elbv2 delete-listener \
+
+--listener-arn <Listen-Port82-ARN>
+
+aws elbv2 delete-target-group \
+
+--target-group-arn <EC2-TG-ARN>
+```
+
+## Conclusion
+
+The hybrid deployment pattern using NLB and TargetGroupBinding provides a practical, low-risk approach to migrating applications to Amazon EKS from various sources, including Amazon EC2, on-premises infrastructure, or other container orchestration solutions. Maintaining the existing NLB configuration while gradually transitioning traffic to containerized workloads allows this approach to support a smooth transition and provide integrated rollback capabilities. While we focused on migrating from Amazon EC2 to Amazon EKS, the flexibility of this pattern extends to many different scenarios, including transitions from on-premises infrastructure or other container orchestration solutions.
+
+Recent improvements to the AWS Load Balancer Controller, particularly the introduction of the [target group MultiCluster](https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/guide/use_cases/multi_cluster/), further expand these capabilities. Organizations can now manage workloads across multiple Kubernetes clusters and integrate with non-cluster resources, facilitating more complex migration strategies and distributed application architectures. This hybrid approach serves as a reliable blueprint for modernization, providing the necessary tools to maintain business continuity and mitigate risk while offering the flexibility to adapt to evolving infrastructure requirements.
+
+To continue your migration journey, we recommend reading our companion post: [Migrating from Self-Managed Kubernetes to Amazon EKS: Here Are Some Key Considerations](https://aws.amazon.com/blogs/containers/migrating-from-self-managed-kubernetes-to-amazon-eks-here-are-some-key-considerations/). This post provides further insights and best practices that complement the hybrid deployment strategy discussed here, especially if you are migrating from a self-managed Kubernetes environment to Amazon EKS.
+
+**TAGS**: [EKS](https://aws.amazon.com/blogs/containers/tag/eks/), [elb](https://aws.amazon.com/blogs/containers/tag/elb/), [nlb](https://aws.amazon.com/blogs/containers/tag/nlb/)

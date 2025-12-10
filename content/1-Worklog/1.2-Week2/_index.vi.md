@@ -1,5 +1,5 @@
 ---
-title: "Week 2 Worklog"
+title: "Nhật ký công việc Tuần 2"
 weight: 2
 pre: " <b> 1.2. </b> "
 ---

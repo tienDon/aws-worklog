@@ -1,38 +1,34 @@
 ---
-title: "Event 5"
+title: "Event 6"
 date: "2025-11-17"
-weight: 5
+weight: 6
 chapter: false
-pre: " <b> 4.5. </b> "
+pre: " <b> 4.6. </b> "
 menu:
   main:
-    name: "Event 5"
-    weight: 5
+    name: "Event 6"
+    weight: 6
 ---
 
-# Summary Report: “Cloud Mastery Series #2: DevOps on AWS”
+# Summary Report: “Cloud Mastery Series #3: Security on AWS”
 
 ## Event Objectives
 
-### Deepen DevOps & Cloud Engineering Knowledge
+### Introduce AWS AI/ML and Generative AI
 
-- To provide participants with a thorough understanding of DevOps practices and cloud-native infrastructure using AWS tools and services.
-- To help bridge the gap between traditional development workflows and modern DevOps culture including automation, CI/CD, containerization, and infrastructure as code.
+- To provide participants with a clear understanding of AWS AI/ML and generative AI services, including their roles in modern application development.
 
-### Provide Hands-On Exposure to AWS DevOps Tools
+### Build Practical AI Knowledge
 
-- To demonstrate real AWS DevOps services: CI/CD pipelines, container services, Infrastructure as Code (IaC), monitoring & observability.
-- To let participants experience live demos and workflows from coding to deployment and operations on AWS.
+- To equip attendees with foundational and practical skills to design, build, and deploy AI/ML and generative AI solutions on AWS.
 
-### Empower Engineers to Build Scalable, Reliable Systems
+### Encourage Hands-On Learning
 
-- To equip attendees with the knowledge and best practices required to design, deploy, and maintain scalable, maintainable, and observable systems in production.
-- To enable participants to adopt DevOps mindset and practices, improving deployment frequency, stability, scalability, and team collaboration.
+- To enable participants to experience real-world AI workflows through demonstrations and guided examples.
 
-### Support Career Growth & Cloud Fluency
+### Strengthen Community and Knowledge Sharing
 
-- To support participants’ journey towards becoming more competent cloud engineers or DevOps practitioners.
-- To provide clarity on AWS certifications path and DevOps career pathways in cloud environments.
+- To foster collaboration and networking within the local AWS and AI/ML community.
 
 ### Speakers
 

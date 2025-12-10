@@ -6,129 +6,82 @@ chapter: false
 pre: " <b> 3.4. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+# Choosing the Right Execution Options for Your SaaS Product in the AWS Marketplace
 
-# Bắt đầu với healthcare data lakes: Sử dụng microservices
+**Author:**
 
-Các data lake có thể giúp các bệnh viện và cơ sở y tế chuyển dữ liệu thành những thông tin chi tiết về doanh nghiệp và duy trì hoạt động kinh doanh liên tục, đồng thời bảo vệ quyền riêng tư của bệnh nhân. **Data lake** là một kho lưu trữ tập trung, được quản lý và bảo mật để lưu trữ tất cả dữ liệu của bạn, cả ở dạng ban đầu và đã xử lý để phân tích. data lake cho phép bạn chia nhỏ các kho chứa dữ liệu và kết hợp các loại phân tích khác nhau để có được thông tin chi tiết và đưa ra các quyết định kinh doanh tốt hơn.
+Pawan Kumar, Technical Account Manager at Amazon Web Services
 
-Bài đăng trên blog này là một phần của loạt bài lớn hơn về việc bắt đầu cài đặt data lake dành cho lĩnh vực y tế. Trong bài đăng blog cuối cùng của tôi trong loạt bài, _“Bắt đầu với data lake dành cho lĩnh vực y tế: Đào sâu vào Amazon Cognito”_, tôi tập trung vào các chi tiết cụ thể của việc sử dụng Amazon Cognito và Attribute Based Access Control (ABAC) để xác thực và ủy quyền người dùng trong giải pháp data lake y tế. Trong blog này, tôi trình bày chi tiết cách giải pháp đã phát triển ở cấp độ cơ bản, bao gồm các quyết định thiết kế mà tôi đã đưa ra và các tính năng bổ sung được sử dụng. Bạn có thể truy cập các code samples cho giải pháp tại Git repo này để tham khảo.
+_Date: March 28, 2025_
 
----
+<style>
+body {
+font-family: "Times New Roman", Times, serif;
 
-## Hướng dẫn kiến trúc
+font-size: 13px;
 
-Thay đổi chính kể từ lần trình bày cuối cùng của kiến trúc tổng thể là việc tách dịch vụ đơn lẻ thành một tập hợp các dịch vụ nhỏ để cải thiện khả năng bảo trì và tính linh hoạt. Việc tích hợp một lượng lớn dữ liệu y tế khác nhau thường yêu cầu các trình kết nối chuyên biệt cho từng định dạng; bằng cách giữ chúng được đóng gói riêng biệt với microservices, chúng ta có thể thêm, xóa và sửa đổi từng trình kết nối mà không ảnh hưởng đến những kết nối khác. Các microservices được kết nối rời thông qua tin nhắn publish/subscribe tập trung trong cái mà tôi gọi là “pub/sub hub”.
+}
 
-Giải pháp này đại diện cho những gì tôi sẽ coi là một lần lặp nước rút hợp lý khác từ last post của tôi. Phạm vi vẫn được giới hạn trong việc nhập và phân tích cú pháp đơn giản của các **HL7v2 messages** được định dạng theo **Quy tắc mã hóa 7 (ER7)** thông qua giao diện REST.
+h1 {
+font-size: 24px;
 
-**Kiến trúc giải pháp bây giờ như sau:**
+}
 
-> _Hình 1. Kiến trúc tổng thể; những ô màu thể hiện những dịch vụ riêng biệt._
+h2 {
+font-size: 18px;
 
----
+}
 
-Mặc dù thuật ngữ _microservices_ có một số sự mơ hồ cố hữu, một số đặc điểm là chung:
+h3 {
+font-size: 16px;
 
-- Chúng nhỏ, tự chủ, kết hợp rời rạc
-- Có thể tái sử dụng, giao tiếp thông qua giao diện được xác định rõ
-- Chuyên biệt để giải quyết một việc
-- Thường được triển khai trong **event-driven architecture**
+}
+</style>
 
-Khi xác định vị trí tạo ranh giới giữa các microservices, cần cân nhắc:
+[AWS Marketplace](https://aws.amazon.com/marketplace/) sellers, independent software vendors (ISVs), and consulting partners (CPs) need to provide execution options when launching software-as-a-service (SaaS) products in the AWS Marketplace. Choosing the right execution option is crucial. This choice affects how customers access your product and can truly impact their experience. Let's explore the available execution options to help you make an informed choice for your SaaS service.
 
-- **Nội tại**: công nghệ được sử dụng, hiệu suất, độ tin cậy, khả năng mở rộng
-- **Bên ngoài**: chức năng phụ thuộc, tần suất thay đổi, khả năng tái sử dụng
-- **Con người**: quyền sở hữu nhóm, quản lý _cognitive load_
+## Prerequisites
 
----
+Before you choose an execution option, you must register as an AWS Marketplace seller. For more information, see [Registering as an AWS Marketplace seller](https://docs.aws.amazon.com/marketplace/latest/userguide/seller-registration-process.html) in the AWS Marketplace Seller Guide.
 
-## Lựa chọn công nghệ và phạm vi giao tiếp
+## Execution Options
 
-| Phạm vi giao tiếp                        | Các công nghệ / mô hình cần xem xét                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Trong một microservice                   | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Giữa các microservices trong một dịch vụ | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Giữa các dịch vụ                         | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+AWS Marketplace allows you to choose from two execution options when listing a SaaS product. The execution option defines the experience your customers have after registering your product in AWS Marketplace.
 
----
+1. **Default Execution URL:** This option allows you to design and manage the entire onboarding experience. It works well for SaaS products that don't require additional resources in the customer's AWS account. The key details are:
 
-## The pub/sub hub
+• Customers are redirected to your product registration page after signing up.
 
-Việc sử dụng kiến trúc **hub-and-spoke** (hay message broker) hoạt động tốt với một số lượng nhỏ các microservices liên quan chặt chẽ.
+• You, as the vendor, control the entire registration experience and provide customers with the steps to access the product.
 
-- Mỗi microservice chỉ phụ thuộc vào _hub_
-- Kết nối giữa các microservice chỉ giới hạn ở nội dung của message được xuất
-- Giảm số lượng synchronous calls vì pub/sub là _push_ không đồng bộ một chiều
+2. **SaaS Quick Launch:** This option works well if your SaaS product requires AWS resources deployed in the customer's account. For example, vendors who deploy [AWS Identity and Access Management roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html), databases, or agents in the customer's AWS account can simplify the onboarding experience for their customers. Key details are:
 
-Nhược điểm: cần **phối hợp và giám sát** để tránh microservice xử lý nhầm message.
+• SaaS Quick Launch uses integrations to create the [AWS CloudFormation](https://aws.amazon.com/cloudformation/) stack to deploy resources with fewer context switches for customers.
 
----
+• Deployment secrets can be stored in the customer's [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) and used by AWS CloudFormation during deployment. This avoids the need for customers to copy and paste deployment parameters.
 
-## Core microservice
+• It provides step-by-step guidance including integrated authorization verification mechanisms to ensure customers have the necessary AWS credentials.
 
-Cung cấp dữ liệu nền tảng và lớp truyền thông, gồm:
+• Products with SaaS Quick Launch display a Quick Launch tag in their descriptions.
 
-- **Amazon S3** bucket cho dữ liệu
-- **Amazon DynamoDB** cho danh mục dữ liệu
-- **AWS Lambda** để ghi message vào data lake và danh mục
-- **Amazon SNS** topic làm _hub_
-- **Amazon S3** bucket cho artifacts như mã Lambda
+For more information, see [Enabling SaaS Quick Launch](https://catalog.workshops.aws/mpseller/en-US/saas/quick-launch-integration).
 
-> Chỉ cho phép truy cập ghi gián tiếp vào data lake qua hàm Lambda → đảm bảo nhất quán.
+## Conclusion and Next Steps
 
----
+In this post, we covered two execution options available for SaaS products in the AWS Marketplace. After choosing the execution option that best suits your needs, you can proceed with listing your SaaS in the AWS Marketplace. You may find the following resources helpful once you begin the listing process.
 
-## Front door microservice
+• [Practice Exercise: Creating a SaaS Listing](https://catalog.workshops.aws/mpseller/en-US/saas/create-listing)
 
-- Cung cấp API Gateway để tương tác REST bên ngoài
-- Xác thực & ủy quyền dựa trên **OIDC** thông qua **Amazon Cognito**
-- Cơ chế _deduplication_ tự quản lý bằng DynamoDB thay vì SNS FIFO vì:
-  1. SNS deduplication TTL chỉ 5 phút
-  2. SNS FIFO yêu cầu SQS FIFO
-  3. Chủ động báo cho sender biết message là bản sao
+• [Practice Exercise: Integrating Your SaaS](https://catalog.workshops.aws/mpseller/en-US/saas/integration)
 
----
+• [Practice Exercise: Enabling SaaS Quick Launch](https://catalog.workshops.aws/mpseller/en-US/saas/quick-launch-integration)
 
-## Staging ER7 microservice
+• [Successfully Testing Your SaaS Listing in AWS Marketplace](https://aws.amazon.com/blogs/awsmarketplace/successfully-testing-your-saas-listing-in-aws-marketplace/)
 
-- Lambda “trigger” đăng ký với pub/sub hub, lọc message theo attribute
-- Step Functions Express Workflow để chuyển ER7 → JSON
-- Hai Lambda:
-  1. Sửa format ER7 (newline, carriage return)
-  2. Parsing logic
-- Kết quả hoặc lỗi được đẩy lại vào pub/sub hub
+• [Update Product Visibility] [product](https://docs.aws.amazon.com/marketplace/latest/userguide/saas-product-settings.html#saas-update-visibility)
 
----
+## About the Author
 
-## Tính năng mới trong giải pháp
+Pawan Kumar is a Technical Account Manager at Amazon Web Services, specializing in AWS Marketplace solutions and serverless architecture. He develops innovative strategies to address complex customer challenges. He aims to drive cloud adoption across industries. Outside of work, Pawan enjoys playing cricket and following international tournaments.
 
-### 1. AWS CloudFormation cross-stack references
-
-Ví dụ _outputs_ trong core microservice:
-
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
-```
+**TAGS:** [AWS Marketplace](https://aws.amazon.com/blogs/awsmarketplace/category/software/aws-marketplace/), [Best Practices](https://aws.amazon.com/blogs/awsmarketplace/category/post-types/best-practices/), [Foundational (100)](https://aws.amazon.com/blogs/awsmarketplace/category/learning-levels/foundational-100/), [SaaS](https://aws.amazon.com/blogs/awsmarketplace/category/saas/), [Software](https://aws.amazon.com/blogs/awsmarketplace/category/software/)

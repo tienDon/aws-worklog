@@ -1,14 +1,10 @@
 ---
-title: "Week 1 Worklog"
+title: "Nhật ký công việc Tuần 1"
 date: "2025-12-09"
 weight: 1
 chapter: false
 pre: " <b> 1.1. </b> "
 ---
-
-{{% notice warning %}}
-⚠️ **Note:** The following information is for reference only.\*\*
-{{% /notice %}}
 
 ### Week 1 Objectives:
 

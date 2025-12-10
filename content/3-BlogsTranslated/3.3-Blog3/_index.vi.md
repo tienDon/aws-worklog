@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 3.3. </b> "
 ---
 
-# Trao quyền cho các nhóm của bạn với quản trị kiến trúc hiện đại {: style="font-family: 'Times New Roman'; font-size: 24px;"}
+# Trao quyền cho các nhóm của bạn với quản trị kiến trúc hiện đại
 
 **Tác giả:**  
 Rostislav Markov, Principal Architect – AWS Professional Services

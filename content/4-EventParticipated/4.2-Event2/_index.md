@@ -1,152 +1,92 @@
 ---
-title: "Event2"
-date: 2025-12-09T19:29:15+07:00
-draft: true
+title: "Event 2"
+date: "2025-10-03"
+weight: 2
+chapter: false
+pre: " <b> 4.2. </b> "
+menu:
+  main:
+    name: "Event 2"
+    weight: 2
 ---
 
+# Summary Report: “AI-Driven Development Life Cycle: Reimagining Software Engineering.”
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** into your report, including this warning.
-{{% /notice %}}
+## Event Objectives
 
-# Summary Report: “Defense from Public Threat: AWS WAF & Application Protection”
+### Introduce AI-Driven Development Concepts
 
-### Event Objectives
-- Provide an overview of common security risks faced by public-facing applications.
-- Explain how AWS WAF operates, how to design effective rule groups, and how to mitigate false positives.
-- Demonstrate AWS WAF Bot Control for identifying and blocking malicious automation.
-- Introduce AWS Shield’s DDoS defense layers and recent enhancements such as bundled flat-rate pricing.
-- Help attendees understand how to build a layered protection model using Route 53, CloudFront, WAF, and Shield.
+- To help developers understand the fundamentals of AI-driven development and how generative AI can be embedded across the entire software development life cycle.
+
+### Showcase AI Tools for Developers
+
+- To demonstrate how Amazon Q Developer and Kiro can support developers in architecture design, coding, testing, deployment, and maintenance.
+
+### Improve Developer Productivity
+
+- To highlight how AI-powered automation reduces repetitive and undifferentiated tasks, enabling developers to focus on higher-value engineering work.
+
+### Prepare Developers for the Future
+
+- To equip participants with future-ready skills and insights needed to adapt to the evolving landscape of AI-enabled software engineering.
 
 ### Speakers
-- **AWS Security Specialists** – experts focused on application and network security (names not disclosed in the provided materials).
+
+- **Toan Huynh**
+- **My Nguyen**
 
 ---
 
-# Key Highlights
+## Key Highlights
 
-### Understanding modern internet threats
-- Public endpoints expose applications to high-frequency attacks that may cause downtime, cost spikes, and compliance issues.
-- Consequences include increased infrastructure consumption, data leakage, credential stuffing, and degraded customer trust.
-- Threat categories include:
-  - **DoS/DDoS attacks** across L3/L4 infrastructure and L7 application traffic.
-  - **Application-level vulnerabilities**, including common CVEs and OWASP Top 10 patterns.
-  - **Bot activities**, from scraping to credential abuse, with rapid growth in **AI-powered bots** (e.g., GPT, Claude, Meta AI).
+### AI-Driven Development Life Cycle Overview
 
-### Escalating attack trends
-- Recent data shows a continual rise in DDoS frequency year over year.
-- AI-based clients significantly increase automated and unpredictable traffic patterns.
-- Timelines from 2021–2025 illustrate more frequent and more sophisticated attack behavior.
+- A comprehensive introduction to how generative AI is transforming the entire software development life cycle, from system architecture to maintenance.
 
----
+### Amazon Q Developer Demonstration
 
-# Architecture & Protection Strategies
+- A live demonstration showcasing how Amazon Q Developer assists developers in coding, testing, troubleshooting, and accelerating everyday development tasks.
 
-### Reinforcing perimeter security using AWS services
-- **Amazon Route 53**: Resilient DNS with global redundancy and built-in DDoS protections.
-- **Amazon CloudFront**:
-  - Acts as a reverse proxy, terminating TLS at edge PoPs.
-  - Blocks attacks early at the edge and reduces backend load.
-  - Supports private VPC origin mode to hide ALB/EC2 from the public internet.
+### Kiro Demonstration
 
-### AWS Shield (Standard & Advanced)
-- Shield provides network-layer filtering, SYN/UDP protection, and health-based traffic mitigation.
-- Shield Advanced adds:
-  - Automated L7 rule creation
-  - Cost protection against scaling surges during attacks
-  - Support from the Shield Response Team (SRT)
+- An interactive demo illustrating how Kiro can be used to streamline development workflows and enhance developer productivity through AI-driven automation.
 
-### New CloudFront Flat-Rate Bundles
-- Fixed monthly pricing tiers (Free, Pro, Business, Premium), each bundling CDN + WAF + DDoS + DNS + logging + edge compute.
-- Enables predictable budgeting, eliminates surprise bills from unexpected traffic spikes.
-- Attack traffic (WAF-blocked or DDoS) **does not count** toward usage quotas.
+### Expert-Led Session
 
----
+- Knowledge sharing led by experienced AWS instructors, providing practical insights and real-world perspectives on AI-powered software engineering.
 
-# AWS WAF Deep Dive
+## Key Takeaways
 
-### How WAF works
-- Web ACLs combine rules, priority ordering, managed rule groups, and default actions.
-- Supports multiple actions: **Allow, Block, Challenge, CAPTCHA, Count**.
-- Rate-based rules throttle excessive traffic by IP or custom keys.
-- Labels allow rule chaining, exclusions, and contextual decisions.
+### Understanding Generative AI in Software Engineering
 
-### Recommended rule hierarchy
-1. IP allowlists/blocklists  
-2. Anti-DDoS managed rules  
-3. Rate-based limits  
-4. Anonymous/verified client checks  
-5. Core OWASP/CVE protections  
-6. Bot and fraud detection  
-7. Custom business rules (start in **Count** mode)
+- A clear understanding of how generative AI reshapes the way applications are designed, built, deployed, and managed securely.
 
-### Bot Control mechanisms
-- Recognizes benign vs. malicious bots using IP reputation, user agents, TLS fingerprints, browser checks, and telemetry.
-- Detects anomalies like token reuse, multi-IP hopping, or automation signatures.
-- Supports challenges (JS/Challenge/CAPTCHA) before enforcing block rules.
+### Increased Developer Productivity
 
----
+- Insights into how AI tools automate undifferentiated heavy-lifting tasks, allowing developers to focus on higher-value and creative work.
 
-# Key Takeaways
+### Practical AI Tool Adoption
 
-### Security Mindset
-- Treat internet exposure as a primary risk factor needing a layered, defense-in-depth approach.
-- Start with traffic observations (Count mode) before tightening enforcement.
-- Combine L3/L4 infrastructure defenses with granular L7 application firewalls.
+- Hands-on knowledge of integrating Amazon Q Developer and Kiro into daily development workflows.
 
-### Technical Architecture
-- CloudFront as the first line of defense reduces compute and bandwidth cost.
-- Use WAF labels, scoped-down rules, and managed groups to maintain precision.
-- Apply bot interrogation techniques for high-value endpoints like login or checkout.
+### Future-Ready Development Skills
 
-### Strategy & Cost Management
-- Flat-rate CloudFront bundles simplify budgeting for startups and production systems.
-- Shield Advanced reduces both downtime and unexpected attack-related costs.
-- Incremental rollout + continuous monitoring ensures minimal disruption.
+- Key learnings on building AI-ready skills that prepare developers and teams for the future of software engineering.
 
----
+## Event Experience
 
-# Applying to Work
+### Engaging Technical Session
 
-- **Evaluate public exposure**: Identify all internet-facing endpoints and apply foundational WAF rules.
-- **Enable Bot Control** to protect login, search, and API routes from scraping and brute force.
-- **Adopt CloudFront** for edge filtering, performance improvement, and origin protection.
-- **Configure rate limiting** and leverage Shield where high availability is required.
-- **Pilot flat-rate plans** starting from Free/Pro, scaling to Business/Premium when workloads grow.
-- **Monitor via CloudWatch** to identify anomalies and iteratively refine rules.
+- A well-structured session combining theory and live demonstrations to ensure both conceptual understanding and practical exposure.
 
----
+### Collaborative Learning Environment
 
-# Event Experience
+- An open and interactive atmosphere encouraging discussions, questions, and knowledge sharing among participants.
 
-Attending the **“Defense from Public Threat: AWS WAF & Application Protection”** workshop provided a complete and practical view of modern application security.
+### Professional AWS Venue
 
-### Learning from AWS experts
-- Gained clarity on how global infrastructures (CloudFront PoPs, Route 53, edge networks) help defend at scale.
-- Real incidents and recent trends made the risks and mitigation strategies more tangible.
+- A premium learning experience hosted at the AWS Event Hall, providing a professional and focused environment for deep technical learning.
 
-### Hands-on exploration
-- Practiced creating rule groups, configuring rate-based protections, and setting up label-based exceptions.
-- Explored bot detection signals and compared challenge vs block strategies.
-- Understood how private origins with CloudFront add an additional protection layer.
+### Inspiration to Adopt AI-Driven Development
 
-### Exploring new innovations
-- Flat-rate CloudFront bundles stood out as a significant shift—simplifying cost control while bundling security.
-- Learned techniques to optimize rules, reduce false positives, and manage premium rule costs with scope-down statements.
-
-### Collaboration & Discussions
-- Discussions around incident handling, DDoS response, and rule tuning helped connect theory to real operations.
-- Reinforced the importance of phased validation before full enforcement.
-
-### Lessons Learned
-- Automated and intelligent protection is essential as threat volume and complexity grow.
-- Monitoring traffic patterns before enforcing strict rules avoids operational disruptions.
-- Security and cost optimization can go hand-in-hand using CloudFront, Shield, and managed rules.
-
----
-
-### Some event photos
-*Add your event photos here*
-
-> Overall, the workshop strengthened my understanding of modern application security and equipped me with practical strategies to apply these defenses into real-world systems.
-
+- A motivating experience that encouraged attendees to explore and adopt AI-driven tools in their own software development life cycles.

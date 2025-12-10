@@ -6,12 +6,6 @@ chapter: false
 pre: " <b> 2. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
-Tại phần này, bạn cần tóm tắt các nội dung trong workshop mà bạn **dự tính** sẽ làm.
-
 # SportShop E-Commerce Platform
 
 ## Kiến trúc AWS ba tầng tối ưu chi phí cho hệ thống bán lẻ thể thao trực tuyến
@@ -88,12 +82,6 @@ CI/CD triển khai theo chuỗi GitLab → CodePipeline → CodeBuild.
 - RDS MySQL lưu dữ liệu
 - S3 lưu media + build frontend
 - CloudWatch giám sát hệ thống
-
----
-
-![IoT Weather Station Architecture](/images/2-Proposal/edge_architecture.jpeg)
-
-![IoT Weather Platform Architecture](/images/2-Proposal/platform_architecture.jpeg)
 
 ### 4. Triển khai kỹ thuật (Technical Implementation)
 

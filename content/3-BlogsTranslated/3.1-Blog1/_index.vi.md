@@ -282,7 +282,7 @@ aws elbv2 delete-target-group \
     --target-group-arn <EC2-TG-ARN>
 ```
 
-## Kết luận {: style="font-size: 18px;"}
+## Kết luận
 
 Mẫu triển khai hybrid sử dụng NLB và TargetGroupBinding cung cấp một cách tiếp cận thực tế, ít rủi ro để di chuyển ứng dụng sang Amazon EKS từ nhiều nguồn khác nhau, bao gồm Amazon EC2, cơ sở hạ tầng on-premises, hoặc các giải pháp điều phối container khác. Duy trì cấu hình NLB hiện có, trong khi dần dần chuyển lưu lượng sang workload được container hóa, cho phép phương pháp này hỗ trợ chuyển đổi mượt mà và cung cấp khả năng rollback tích hợp. Mặc dù chúng tôi đã tập trung vào việc di chuyển từ Amazon EC2 sang Amazon EKS, tính linh hoạt của mẫu này mở rộng cho nhiều kịch bản khác nhau, bao gồm chuyển đổi từ cơ sở hạ tầng on-premises hoặc các giải pháp điều phối container khác.
 

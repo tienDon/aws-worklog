@@ -6,12 +6,6 @@ chapter: false
 pre: " <b> 2. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
-
-In this section, you need to summarize the contents of the workshop that you **plan** to conduct.
-
 # SportShop E-Commerce Platform
 
 ## A Cost-Optimized AWS Three-Tier Architecture for Online Sports Retail
@@ -91,10 +85,6 @@ CI/CD is managed through GitLab → CodePipeline → CodeBuild.
 - CloudWatch provides centralized monitoring
 
 ---
-
-![IoT Weather Station Architecture](/images/2-Proposal/edge_architecture.jpeg)
-
-![IoT Weather Platform Architecture](/images/2-Proposal/platform_architecture.jpeg)
 
 ### 4. Technical Implementation
 
