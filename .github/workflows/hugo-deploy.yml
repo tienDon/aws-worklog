@@ -79,8 +79,14 @@ jobs:
 
           echo "Final theme check:"
           ls -la themes/hugo-theme-learn/
-          echo "Theme layouts:"
-          ls -la themes/hugo-theme-learn/layouts/ || echo "No layouts found"
+          echo "Theme static assets:"
+          ls -la themes/hugo-theme-learn/static/ || echo "No static assets"
+
+          # Ensure static assets are copied
+          if [ -d "themes/hugo-theme-learn/static" ]; then
+            echo "Copying theme static assets to project static/"
+            cp -r themes/hugo-theme-learn/static/* static/ || echo "Failed to copy static assets"
+          fi
 
       - name: Setup Pages
         id: pages
@@ -88,6 +94,14 @@ jobs:
 
       - name: Install Node.js dependencies
         run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
+
+      - name: Fix config for GitHub Pages
+        run: |
+          echo "Updating config.toml for GitHub Pages..."
+          sed -i 's|baseURL = ".*"|baseURL = "${{ steps.pages.outputs.base_url }}/"|' config.toml
+          sed -i 's|relativeURLs = false|relativeURLs = true|' config.toml
+          echo "Updated config:"
+          cat config.toml
 
       - name: Build with Hugo
         env:
@@ -99,13 +113,21 @@ jobs:
           hugo version
           echo "Theme check:"
           ls -la themes/hugo-theme-learn/
-          echo "Config check:"
-          cat config.toml
+          echo "Static assets check:"
+          ls -la themes/hugo-theme-learn/static/ || echo "No static assets"
           hugo \
             --gc \
             --minify \
-            --verbose \
-            --baseURL "${{ steps.pages.outputs.base_url }}/"
+            --verbose
+
+      - name: Debug generated assets
+        run: |
+          echo "Generated public directory:"
+          find public -name "*.css" | head -10
+          echo "CSS directory:"
+          ls -la public/css/ || echo "No CSS directory"
+          echo "JS directory:" 
+          ls -la public/js/ || echo "No JS directory"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
