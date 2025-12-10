@@ -21,7 +21,7 @@ chapter: false
 
 &emsp; **University:** FPT University Ho Chi Minh City
 
-&emsp; **Major:** Information Technology
+&emsp; **Major:** Software Engineer
 
 &emsp; **Class:** AWS082025
 

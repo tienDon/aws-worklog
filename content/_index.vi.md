@@ -17,7 +17,7 @@ chapter: false
 
 &emsp; **Trường:** Trường Đại Học FPT TP.HCM
 
-&emsp; **Ngành:** Công nghệ thông tin
+&emsp; **Ngành:** Kỹ thuật phần mềm
 
 &emsp; **Lớp:** AWS082025
 
