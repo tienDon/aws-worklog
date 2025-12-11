@@ -1,13 +1,9 @@
 ---
 title: "Event 5"
-date: "2025-11-17"
+date: "2025-11-15"
 weight: 5
 chapter: false
 pre: " <b> 4.5. </b> "
-menu:
-  main:
-    name: "Event 5"
-    weight: 5
 ---
 
 # Summary Report: “Cloud Mastery Series #2: DevOps on AWS”

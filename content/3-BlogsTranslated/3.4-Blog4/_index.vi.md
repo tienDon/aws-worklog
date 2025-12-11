@@ -6,82 +6,88 @@ chapter: false
 pre: " <b> 3.4. </b> "
 ---
 
-# Choosing the Right Execution Options for Your SaaS Product in the AWS Marketplace
+# Lựa Chọn Phương Thức Thực Thi Phù Hợp Cho Sản Phẩm SaaS Của Bạn Trên AWS Marketplace
 
-**Author:**
+**Tác giả:**
 
-Pawan Kumar, Technical Account Manager at Amazon Web Services
+Pawan Kumar, Quản Lý Tài Khoản Kỹ Thuật tại Amazon Web Services
 
-_Date: March 28, 2025_
+_Ngày: 28 tháng 3 năm 2025_
 
 <style>
+
 body {
 font-family: "Times New Roman", Times, serif;
 
 font-size: 13px;
+
 
 }
 
 h1 {
 font-size: 24px;
 
+
 }
 
 h2 {
 font-size: 18px;
+
 
 }
 
 h3 {
 font-size: 16px;
 
+
 }
+
 </style>
 
-[AWS Marketplace](https://aws.amazon.com/marketplace/) sellers, independent software vendors (ISVs), and consulting partners (CPs) need to provide execution options when launching software-as-a-service (SaaS) products in the AWS Marketplace. Choosing the right execution option is crucial. This choice affects how customers access your product and can truly impact their experience. Let's explore the available execution options to help you make an informed choice for your SaaS service.
+[AWS Marketplace](https://aws.amazon.com/marketplace/), các nhà cung cấp phần mềm độc lập (ISV) và các đối tác tư vấn (CP) cần cung cấp các phương thức thực thi khi ra mắt sản phẩm phần mềm dưới dạng dịch vụ (SaaS) trên AWS Marketplace. Việc lựa chọn phương thức thực thi phù hợp là rất quan trọng. Lựa chọn này ảnh hưởng đến cách khách hàng truy cập sản phẩm của bạn và thực sự có thể tác động đến trải nghiệm của họ. Hãy cùng khám phá các tùy chọn thực thi có sẵn để giúp bạn đưa ra lựa chọn sáng suốt cho dịch vụ SaaS của mình.
 
-## Prerequisites
+## Điều kiện tiên quyết
 
-Before you choose an execution option, you must register as an AWS Marketplace seller. For more information, see [Registering as an AWS Marketplace seller](https://docs.aws.amazon.com/marketplace/latest/userguide/seller-registration-process.html) in the AWS Marketplace Seller Guide.
+Trước khi chọn một tùy chọn thực thi, bạn phải đăng ký làm người bán trên AWS Marketplace. Để biết thêm thông tin, hãy xem [Đăng ký làm người bán trên AWS Marketplace](https://docs.aws.amazon.com/marketplace/latest/userguide/seller-registration-process.html) trong Hướng dẫn dành cho người bán trên AWS Marketplace.
 
-## Execution Options
+## Các tùy chọn thực thi
 
-AWS Marketplace allows you to choose from two execution options when listing a SaaS product. The execution option defines the experience your customers have after registering your product in AWS Marketplace.
+AWS Marketplace cho phép bạn chọn từ hai tùy chọn thực thi khi niêm yết sản phẩm SaaS. Tùy chọn thực thi xác định trải nghiệm mà khách hàng của bạn có sau khi đăng ký sản phẩm của bạn trên AWS Marketplace.
 
-1. **Default Execution URL:** This option allows you to design and manage the entire onboarding experience. It works well for SaaS products that don't require additional resources in the customer's AWS account. The key details are:
+1. **URL thực thi mặc định:** Tùy chọn này cho phép bạn thiết kế và quản lý toàn bộ trải nghiệm đăng ký. Nó hoạt động tốt cho các sản phẩm SaaS không yêu cầu thêm tài nguyên trong tài khoản AWS của khách hàng. Các chi tiết chính là:
 
-• Customers are redirected to your product registration page after signing up.
+• Khách hàng được chuyển hướng đến trang đăng ký sản phẩm của bạn sau khi đăng ký.
 
-• You, as the vendor, control the entire registration experience and provide customers with the steps to access the product.
+• Với tư cách là nhà cung cấp, bạn kiểm soát toàn bộ trải nghiệm đăng ký và cung cấp cho khách hàng các bước để truy cập sản phẩm.
 
-2. **SaaS Quick Launch:** This option works well if your SaaS product requires AWS resources deployed in the customer's account. For example, vendors who deploy [AWS Identity and Access Management roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html), databases, or agents in the customer's AWS account can simplify the onboarding experience for their customers. Key details are:
+2. **Khởi chạy nhanh SaaS:** Tùy chọn này hoạt động tốt nếu sản phẩm SaaS của bạn yêu cầu các tài nguyên AWS được triển khai trong tài khoản của khách hàng. Ví dụ, các nhà cung cấp triển khai [vai trò Quản lý danh tính và truy cập AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html), cơ sở dữ liệu hoặc tác nhân trong tài khoản AWS của khách hàng có thể đơn giản hóa trải nghiệm đăng ký cho khách hàng của họ. Các chi tiết chính là:
 
-• SaaS Quick Launch uses integrations to create the [AWS CloudFormation](https://aws.amazon.com/cloudformation/) stack to deploy resources with fewer context switches for customers.
+• Khởi chạy nhanh SaaS sử dụng các tích hợp để tạo ngăn xếp [AWS CloudFormation](https://aws.amazon.com/cloudformation/) nhằm triển khai tài nguyên với ít thao tác chuyển đổi ngữ cảnh hơn cho khách hàng.
 
-• Deployment secrets can be stored in the customer's [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) and used by AWS CloudFormation during deployment. This avoids the need for customers to copy and paste deployment parameters.
+• Các bí mật triển khai có thể được lưu trữ trong [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) của khách hàng và được AWS CloudFormation sử dụng trong quá trình triển khai. Điều này giúp khách hàng không cần phải sao chép và dán các tham số triển khai.
 
-• It provides step-by-step guidance including integrated authorization verification mechanisms to ensure customers have the necessary AWS credentials.
+• Nó cung cấp hướng dẫn từng bước, bao gồm cả cơ chế xác minh ủy quyền tích hợp để đảm bảo khách hàng có thông tin đăng nhập AWS cần thiết.
 
-• Products with SaaS Quick Launch display a Quick Launch tag in their descriptions.
+• Các sản phẩm có SaaS Quick Launch sẽ hiển thị thẻ Quick Launch trong phần mô tả.
 
-For more information, see [Enabling SaaS Quick Launch](https://catalog.workshops.aws/mpseller/en-US/saas/quick-launch-integration).
+Để biết thêm thông tin, hãy xem [Kích hoạt SaaS Quick Launch](https://catalog.workshops.aws/mpseller/en-US/saas/quick-launch-integration).
 
-## Conclusion and Next Steps
+## Kết luận và các bước tiếp theo
 
-In this post, we covered two execution options available for SaaS products in the AWS Marketplace. After choosing the execution option that best suits your needs, you can proceed with listing your SaaS in the AWS Marketplace. You may find the following resources helpful once you begin the listing process.
+Trong bài viết này, chúng ta đã đề cập đến hai tùy chọn thực thi dành cho các sản phẩm SaaS trên AWS Marketplace. Sau khi chọn tùy chọn thực thi phù hợp nhất với nhu cầu của mình, bạn có thể tiến hành niêm yết sản phẩm SaaS của mình trên AWS Marketplace. Bạn có thể thấy các tài nguyên sau đây hữu ích khi bắt đầu quá trình niêm yết.
 
-• [Practice Exercise: Creating a SaaS Listing](https://catalog.workshops.aws/mpseller/en-US/saas/create-listing)
+• [Bài tập thực hành: Tạo trang thông tin sản phẩm SaaS](https://catalog.workshops.aws/mpseller/en-US/saas/create-listing)
 
-• [Practice Exercise: Integrating Your SaaS](https://catalog.workshops.aws/mpseller/en-US/saas/integration)
+• [Bài tập thực hành: Tích hợp sản phẩm SaaS của bạn](https://catalog.workshops.aws/mpseller/en-US/saas/integration)
 
-• [Practice Exercise: Enabling SaaS Quick Launch](https://catalog.workshops.aws/mpseller/en-US/saas/quick-launch-integration)
+• [Bài tập thực hành: Kích hoạt tính năng Khởi chạy nhanh sản phẩm SaaS](https://catalog.workshops.aws/mpseller/en-US/saas/quick-launch-integration)
 
-• [Successfully Testing Your SaaS Listing in AWS Marketplace](https://aws.amazon.com/blogs/awsmarketplace/successfully-testing-your-saas-listing-in-aws-marketplace/)
+• [Kiểm tra thành công trang thông tin sản phẩm SaaS của bạn trên AWS Marketplace](https://aws.amazon.com/blogs/awsmarketplace/successfully-testing-your-saas-listing-in-aws-marketplace/)
 
-• [Update Product Visibility] [product](https://docs.aws.amazon.com/marketplace/latest/userguide/saas-product-settings.html#saas-update-visibility)
+• [Cập nhật khả năng hiển thị sản phẩm] [Sản phẩm](https://docs.aws.amazon.com/marketplace/latest/userguide/saas-product-settings.html#saas-update-visibility)
 
-## About the Author
+## Giới thiệu về tác giả
 
-Pawan Kumar is a Technical Account Manager at Amazon Web Services, specializing in AWS Marketplace solutions and serverless architecture. He develops innovative strategies to address complex customer challenges. He aims to drive cloud adoption across industries. Outside of work, Pawan enjoys playing cricket and following international tournaments.
+Pawan Kumar là Quản lý Tài khoản Kỹ thuật tại Amazon Web Services, chuyên về các giải pháp AWS Marketplace và kiến ​​trúc điện toán phi máy chủ. Anh ấy phát triển các chiến lược sáng tạo để giải quyết các thách thức phức tạp của khách hàng. Mục tiêu của anh ấy là thúc đẩy việc áp dụng điện toán đám mây trong mọi ngành công nghiệp. Ngoài công việc, Pawan thích chơi cricket và theo dõi các giải đấu quốc tế.
 
-**TAGS:** [AWS Marketplace](https://aws.amazon.com/blogs/awsmarketplace/category/software/aws-marketplace/), [Best Practices](https://aws.amazon.com/blogs/awsmarketplace/category/post-types/best-practices/), [Foundational (100)](https://aws.amazon.com/blogs/awsmarketplace/category/learning-levels/foundational-100/), [SaaS](https://aws.amazon.com/blogs/awsmarketplace/category/saas/), [Software](https://aws.amazon.com/blogs/awsmarketplace/category/software/)
+**THẺ:** [AWS Marketplace](https://aws.amazon.com/blogs/awsmarketplace/category/software/aws-marketplace/), [Thực tiễn tốt nhất](https://aws.amazon.com/blogs/awsmarketplace/category/post-types/best-practices/), [Cơ bản (100)](https://aws.amazon.com/blogs/awsmarketplace/category/learning-levels/foundational-100/), [SaaS](https://aws.amazon.com/blogs/awsmarketplace/category/saas/), [Phần mềm](https://aws.amazon.com/blogs/awsmarketplace/category/software/)

@@ -1,13 +1,9 @@
 ---
 title: "Event 4"
-date: "2025-11-07"
+date: "2025-11-15"
 weight: 4
 chapter: false
 pre: " <b> 4.4. </b> "
-menu:
-  main:
-    name: "Event 4"
-    weight: 4
 ---
 
 # Summary Report: “AWS Cloud Mastery Series #1”

@@ -6,22 +6,74 @@ chapter: false
 pre: " <b> 4. </b> "
 ---
 
+---
+
 ### [Event 1](4.1-Event1/)
 
-&emsp;**Tên sự kiện:** GenAI-powered App-DB Modernization workshop
+&emsp;**Event Name:** GenAI-powered App-DB Modernization workshop
 
-&emsp;**Thời gian:** 09:00 ngày 13/08/2025
+&emsp;**Date & Time:** 09:00, August 13, 2025
 
-&emsp;**Địa điểm:** Tầng 26, tòa nhà Bitexco, số 02 đường Hải Triều, phường Sài Gòn, thành phố Hồ Chí Minh
+&emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City
 
-&emsp;**Vai trò trong sự kiện:** Người tham dự
+&emsp;**Role:** Attendee
+
+---
 
 ### [Event 2](4.2-Event2/)
 
-&emsp;**Tên sự kiện:** GenAI-powered App-DB Modernization workshop
+&emsp;**Event Name:** GenAI-powered App-DB Modernization workshop
 
-&emsp;**Thời gian:** 09:00 ngày 13/08/2025
+&emsp;**Date & Time:** 09:00, August 13, 2025
 
-&emsp;**Địa điểm:** Tầng 26, tòa nhà Bitexco, số 02 đường Hải Triều, phường Sài Gòn, thành phố Hồ Chí Minh
+&emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City
 
-&emsp;**Vai trò trong sự kiện:** Người tham dự
+&emsp;**Role:** Attendee
+
+---
+
+### [Event 3](4.3-Event3/)
+
+&emsp;**Event Name:** GenAI-powered App-DB Modernization workshop
+
+&emsp;**Date & Time:** 09:00, August 13, 2025
+
+&emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City
+
+&emsp;**Role:** Attendee
+
+---
+
+### [Event 4](4.4-Event4/)
+
+&emsp;**Event Name:** GenAI-powered App-DB Modernization workshop
+
+&emsp;**Date & Time:** 09:00, August 13, 2025
+
+&emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City
+
+&emsp;**Role:** Attendee
+
+---
+
+### [Event 5](4.5-Event5/)
+
+&emsp;**Event Name:** GenAI-powered App-DB Modernization workshop
+
+&emsp;**Date & Time:** 09:00, August 13, 2025
+
+&emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City
+
+&emsp;**Role:** Attendee
+
+---
+
+### [Event 6](4.6-Event6/)
+
+&emsp;**Event Name:** GenAI-powered App-DB Modernization workshop
+
+&emsp;**Date & Time:** 09:00, August 13, 2025
+
+&emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City
+
+&emsp;**Role:** Attendee

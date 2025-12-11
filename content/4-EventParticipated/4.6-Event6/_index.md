@@ -14,131 +14,133 @@ menu:
 
 ## Event Objectives
 
-### Introduce AWS AI/ML and Generative AI
+### Provide Foundational Knowledge of AWS Security Pillars
 
-- To provide participants with a clear understanding of AWS AI/ML and generative AI services, including their roles in modern application development.
+- Introduce the five pillars of the AWS Well-Architected Security Framework and explain the role of the Security Pillar in designing secure and resilient cloud architectures.
 
-### Build Practical AI Knowledge
+### Strengthen Cloud Security Skills
 
-- To equip attendees with foundational and practical skills to design, build, and deploy AI/ML and generative AI solutions on AWS.
+- Equip participants with essential knowledge to identify risks, build multi-layered protection, and implement industry-standard security measures on AWS.
 
-### Encourage Hands-On Learning
+### Improve Practical Understanding Through Demonstrations
 
-- To enable participants to experience real-world AI workflows through demonstrations and guided examples.
+- Help attendees gain hands-on awareness through demos such as IAM policy simulation, threat detection scenarios, incident handling workflows, and resource protection techniques.
 
-### Strengthen Community and Knowledge Sharing
+### Foster Networking and Knowledge Sharing
 
-- To foster collaboration and networking within the local AWS and AI/ML community.
+- Encourage collaboration and knowledge exchange within the local AWS engineering community in Vietnam.
 
 ### Speakers
 
-- ***
+- **Kha Van (AWS)** – Host / Facilitator
+- **Tran Duc Anh**: Cloud Security Engineer Trainee, AWS Cloud Club Captain SGU
+- **Nguyen Tuan Thinh**: Cloud Engineer trainee
+- **Nguyen Do Thanh Dat**: Cloud engineer Trainee
+- **Thinh Lam**: FCJer
+- **Viet Nguyen**: FCJer
+
+---
 
 ## Key Highlights
 
-### Challenges of Manual Infrastructure (“ClickOps”)
+### Shared Responsibility Model & Security Foundations
 
-- Deployments take time, causing delays.
-- Prone to manual errors and inconsistent configurations across environments.
-- Difficult for teams to collaborate and maintain reproducible setups.
+- Clarified the division of responsibilities between AWS and customers.
+- Introduced core security principles: _Least Privilege_, _Zero Trust_, and _Defense in Depth_.
+- Discussed common cloud vulnerabilities and threat patterns observed in Vietnam.
 
-### Introduction to Infrastructure as Code (IaC)
+### Identity & Access Management (IAM)
 
-- Manage cloud resources through code rather than manual console operations.
-- Benefits: automation, scalability, reproducibility, and reduced provisioning errors.
+- Covered IAM Users, Roles, Policies, and AWS security best practices.
+- Demonstrated AWS IAM Identity Center (SSO), permission sets, and centralized identity management.
+- Emphasized MFA enforcement, credential rotation, and IAM policy validation using simulation tools.
 
-### AWS CloudFormation
+### Detection & Monitoring
 
-- AWS native IaC service using YAML or JSON templates to define and deploy stacks.
-- Automatically creates, updates, and deletes resources as a unified unit.
-- Supports drift detection to identify and fix deviations from templates.
+- CloudTrail at the Organization level for unified logging.
+- GuardDuty for threat intelligence and behavior anomaly detection.
+- Security Hub for centralized security posture checks based on CIS and AWS best practices.
+- EventBridge used for automating alerting and remediation actions.
 
-### AWS Cloud Development Kit (CDK)
+### Infrastructure Protection
 
-- Framework for defining IaC using familiar programming languages like Python, TypeScript, or Java.
-- Constructs at multiple levels: L1 (direct CloudFormation mapping), L2 (developer-friendly defaults), L3 (pre-built patterns).
-- CLI for initializing projects, synthesizing templates, deploying stacks, and detecting drifts.
+- VPC security: segmentation, subnet isolation, Security Groups vs NACLs.
+- Use of AWS WAF, AWS Shield, and AWS Network Firewall.
+- Workload protection: EC2 hardening, container image scanning, and runtime threat detection.
 
-### Choosing IaC Tools
+### Data Protection
 
-- Consider single vs. multi-cloud, team expertise (developers vs. operations), and ecosystem compatibility.
-- Comparison with Terraform, which uses HCL for cross-provider support.
+- Encryption at-rest and in-transit for S3, EBS, RDS, and other AWS services.
+- AWS KMS: key policies, key rotation, grants, and permission boundaries.
+- Secrets Manager and Parameter Store for secure secrets lifecycle management.
+- Data classification, access guardrails, and governance controls.
 
-### Docker and Containers
+### Incident Response
 
-- Containers are lightweight, portable units including applications and dependencies.
-- Dockerfiles ensure consistent images across development, testing, and production.
-- Amazon ECR for secure image storage, scanning, and management.
+- Explained the AWS incident response lifecycle and best practices.
+- Reviewed multiple real-world playbooks:
+  - Compromised IAM credentials
+  - Publicly exposed S3 buckets
+  - Malware detection in cloud workloads
+- Showed workflows to snapshot, isolate, collect logs, and recover workloads.
+- Demonstrated automated remediation using Lambda and Step Functions.
 
-### AWS Container Orchestration Services
-
-- **Amazon ECS**: managed Docker orchestration with EC2 or Fargate.
-- **Amazon EKS**: Kubernetes clusters with auto-scaling and updates.
-- **AWS App Runner**: serverless deployment of web apps from code or images.
-- Comparison: ECS is simpler and AWS-integrated; EKS offers flexibility and Kubernetes standards.
-
-### CI/CD on AWS
-
-- Source control with **CodeCommit**, using GitFlow or trunk-based development.
-- Build & test with **CodeBuild**, deployment via **CodeDeploy** (blue/green, canary, rolling).
-- Orchestration with **CodePipeline** for end-to-end automation.
-- Demo showing a full pipeline from commit to production.
-
-### Monitoring and Observability
-
-- **AWS CloudWatch** for metrics, logs, dashboards, and alerts.
-- **AWS X-Ray** for request tracing and identifying bottlenecks.
-- Best practices: alerting, on-call rotations, full-stack visibility.
-
-### DevOps Best Practices & Case Studies
-
-- Advanced strategies: feature flags, A/B testing, automated testing integration.
-- Incident management: blameless postmortems, lessons from startups and enterprises.
+---
 
 ## Key Takeaways
 
-### DevOps Mindset
+### Security Mindset
 
-- Promote collaboration between development and operations to accelerate delivery.
-- Track metrics like DORA to measure deployment speed and reliability.
-- Foster a culture of continuous improvement based on business needs.
+- Security is a continuous process, not a one-time setup.
+- Apply _least privilege_ consistently and enforce role-based access.
+- Build security into design stages, not after deployment.
 
-### Technical Practices
+### Cloud Security Best Practices
 
-- Use IaC for automated, version-controlled infrastructure to prevent errors.
-- Leverage CDK constructs for reusable patterns in complex setups.
-- Implement container orchestration with ECS or EKS according to workloads and team skills.
-- Build robust CI/CD pipelines for frequent, low-risk releases.
+- Enable mandatory logging: CloudTrail Organization, GuardDuty.
+- Prefer IAM Roles over long-term access keys.
+- Enforce encryption-by-default across all services.
+- Perform configuration drift detection to maintain consistency.
 
-### Observability & Reliability
+### Observability & Threat Detection
 
-- Integrate CloudWatch and X-Ray for proactive monitoring and rapid troubleshooting.
-- Use deployment strategies like canary releases to minimize downtime.
-- Perform regular drift checks and apply lifecycle policies for container management.
+- Combine CloudWatch, Security Hub, and GuardDuty for deep visibility.
+- Use severity-based alerting integrated with Slack or email.
+- Implement distributed tracing with X-Ray for microservices troubleshooting.
 
-### Modernization Approach
+### Incident Preparedness
 
-- Assess current setups before migrating to microservices or containers.
-- Implement in phases, experimenting with tools like App Runner for quick wins.
-- Measure outcomes through cost savings, faster iterations, and improved agility.
+- Standardize incident playbooks and runbooks.
+- Automate security responses for high-risk events.
+- Conduct periodic security game days to practice real scenarios.
 
 ### Applying to Work
 
-- Incorporate Git strategies and CodePipeline into workflows for better automation.
-- Try CDK for IaC in pilot projects to improve developer productivity.
-- Set up observability dashboards to enhance incident response times.
-- Conduct event storming to model container-based architectures.
-- Pursue AWS DevOps certifications to advance career paths.
+- Reassess current environments for Well-Architected compliance.
+- Establish baseline security for IAM, logging, networking, and encryption.
+- Deploy Security Hub and GuardDuty across multi-account environments.
+- Integrate scanning into CI/CD and container workflows.
+- Explore the AWS Security Specialty certification.
+
+---
 
 ## Event Experience
 
-- **Learning from experts:** AWS Community Builders shared practical knowledge, demos, and examples of microservices deployments.
-- **Hands-on technical learning:** Explored CI/CD pipelines, IaC, and container orchestration; learned ECS vs. EKS trade-offs; monitored and remediated configuration drift.
-- **Effective use of AWS tools:** CDK simplifies IaC using code, App Runner supports rapid deployment, and observability tools optimize application performance.
-- **Networking & interaction:** Q&A and group discussions allowed exchanging ideas about tools and career guidance, aligning technology with business goals.
+- **Learning from AWS Experts:**  
+  Attendees benefited from real-world insights, best practices, and practical demos delivered by AWS engineers and Community Builders.
+
+- **Hands-on Learning:**  
+  Participants observed live simulations of IAM access checks, organization-wide logging setups, GuardDuty threat findings, and incident response flows.
+
+- **Effective Use of AWS Security Tools:**  
+  Tools like CloudTrail, GuardDuty, Security Hub, KMS, and WAF demonstrated how to build continuous protection and monitoring capabilities.
+
+- **Networking & Community Interaction:**  
+  Q&A sessions and group discussions allowed participants to share experiences, gain career insights, and align technical decisions with business goals.
 
 ### Lessons Learned
 
-- Automating IaC and CI/CD reduces risks and improves efficiency.
-- Balanced container orchestration ensures scalability without complexity.
-- Observability and blameless postmortems foster a resilient DevOps culture.
+- Multi-layered security ensures resilience even if one layer fails.
+- Logging and monitoring are essential, not optional.
+- Automation reduces human error and accelerates response time.
+- Blameless postmortems and open communication help teams improve continuously.

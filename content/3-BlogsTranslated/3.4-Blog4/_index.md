@@ -6,125 +6,82 @@ chapter: false
 pre: " <b> 3.4. </b> "
 ---
 
-# Getting Started with Healthcare Data Lakes: Using Microservices
+# Choosing the Right Execution Options for Your SaaS Product in the AWS Marketplace
 
-Data lakes can help hospitals and healthcare facilities turn data into business insights, maintain business continuity, and protect patient privacy. A **data lake** is a centralized, managed, and secure repository to store all your data, both in its raw and processed forms for analysis. Data lakes allow you to break down data silos and combine different types of analytics to gain insights and make better business decisions.
+**Author:**
 
-This blog post is part of a larger series on getting started with setting up a healthcare data lake. In my final post of the series, _“Getting Started with Healthcare Data Lakes: Diving into Amazon Cognito”_, I focused on the specifics of using Amazon Cognito and Attribute Based Access Control (ABAC) to authenticate and authorize users in the healthcare data lake solution. In this blog, I detail how the solution evolved at a foundational level, including the design decisions I made and the additional features used. You can access the code samples for the solution in this Git repo for reference.
+Pawan Kumar, Technical Account Manager at Amazon Web Services
 
----
+_Date: March 28, 2025_
 
-## Architecture Guidance
+<style>
+body {
+font-family: "Times New Roman", Times, serif;
 
-The main change since the last presentation of the overall architecture is the decomposition of a single service into a set of smaller services to improve maintainability and flexibility. Integrating a large volume of diverse healthcare data often requires specialized connectors for each format; by keeping them encapsulated separately as microservices, we can add, remove, and modify each connector without affecting the others. The microservices are loosely coupled via publish/subscribe messaging centered in what I call the “pub/sub hub.”
+font-size: 13px;
 
-This solution represents what I would consider another reasonable sprint iteration from my last post. The scope is still limited to the ingestion and basic parsing of **HL7v2 messages** formatted in **Encoding Rules 7 (ER7)** through a REST interface.
+}
 
-**The solution architecture is now as follows:**
+h1 {
+font-size: 24px;
 
-> _Figure 1. Overall architecture; colored boxes represent distinct services._
+}
 
----
+h2 {
+font-size: 18px;
 
-While the term _microservices_ has some inherent ambiguity, certain traits are common:
+}
 
-- Small, autonomous, loosely coupled
-- Reusable, communicating through well-defined interfaces
-- Specialized to do one thing well
-- Often implemented in an **event-driven architecture**
+h3 {
+font-size: 16px;
 
-When determining where to draw boundaries between microservices, consider:
+}
+</style>
 
-- **Intrinsic**: technology used, performance, reliability, scalability
-- **Extrinsic**: dependent functionality, rate of change, reusability
-- **Human**: team ownership, managing _cognitive load_
+[AWS Marketplace](https://aws.amazon.com/marketplace/) sellers, independent software vendors (ISVs), and consulting partners (CPs) need to provide execution options when launching software-as-a-service (SaaS) products in the AWS Marketplace. Choosing the right execution option is crucial. This choice affects how customers access your product and can truly impact their experience. Let's explore the available execution options to help you make an informed choice for your SaaS service.
 
----
+## Prerequisites
 
-## Technology Choices and Communication Scope
+Before you choose an execution option, you must register as an AWS Marketplace seller. For more information, see [Registering as an AWS Marketplace seller](https://docs.aws.amazon.com/marketplace/latest/userguide/seller-registration-process.html) in the AWS Marketplace Seller Guide.
 
-| Communication scope                       | Technologies / patterns to consider                                                        |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Within a single microservice              | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Between microservices in a single service | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Between services                          | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+## Execution Options
 
----
+AWS Marketplace allows you to choose from two execution options when listing a SaaS product. The execution option defines the experience your customers have after registering your product in AWS Marketplace.
 
-## The Pub/Sub Hub
+1. **Default Execution URL:** This option allows you to design and manage the entire onboarding experience. It works well for SaaS products that don't require additional resources in the customer's AWS account. The key details are:
 
-Using a **hub-and-spoke** architecture (or message broker) works well with a small number of tightly related microservices.
+• Customers are redirected to your product registration page after signing up.
 
-- Each microservice depends only on the _hub_
-- Inter-microservice connections are limited to the contents of the published message
-- Reduces the number of synchronous calls since pub/sub is a one-way asynchronous _push_
+• You, as the vendor, control the entire registration experience and provide customers with the steps to access the product.
 
-Drawback: **coordination and monitoring** are needed to avoid microservices processing the wrong message.
+2. **SaaS Quick Launch:** This option works well if your SaaS product requires AWS resources deployed in the customer's account. For example, vendors who deploy [AWS Identity and Access Management roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html), databases, or agents in the customer's AWS account can simplify the onboarding experience for their customers. Key details are:
 
----
+• SaaS Quick Launch uses integrations to create the [AWS CloudFormation](https://aws.amazon.com/cloudformation/) stack to deploy resources with fewer context switches for customers.
 
-## Core Microservice
+• Deployment secrets can be stored in the customer's [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) and used by AWS CloudFormation during deployment. This avoids the need for customers to copy and paste deployment parameters.
 
-Provides foundational data and communication layer, including:
+• It provides step-by-step guidance including integrated authorization verification mechanisms to ensure customers have the necessary AWS credentials.
 
-- **Amazon S3** bucket for data
-- **Amazon DynamoDB** for data catalog
-- **AWS Lambda** to write messages into the data lake and catalog
-- **Amazon SNS** topic as the _hub_
-- **Amazon S3** bucket for artifacts such as Lambda code
+• Products with SaaS Quick Launch display a Quick Launch tag in their descriptions.
 
-> Only allow indirect write access to the data lake through a Lambda function → ensures consistency.
+For more information, see [Enabling SaaS Quick Launch](https://catalog.workshops.aws/mpseller/en-US/saas/quick-launch-integration).
 
----
+## Conclusion and Next Steps
 
-## Front Door Microservice
+In this post, we covered two execution options available for SaaS products in the AWS Marketplace. After choosing the execution option that best suits your needs, you can proceed with listing your SaaS in the AWS Marketplace. You may find the following resources helpful once you begin the listing process.
 
-- Provides an API Gateway for external REST interaction
-- Authentication & authorization based on **OIDC** via **Amazon Cognito**
-- Self-managed _deduplication_ mechanism using DynamoDB instead of SNS FIFO because:
-  1. SNS deduplication TTL is only 5 minutes
-  2. SNS FIFO requires SQS FIFO
-  3. Ability to proactively notify the sender that the message is a duplicate
+• [Practice Exercise: Creating a SaaS Listing](https://catalog.workshops.aws/mpseller/en-US/saas/create-listing)
 
----
+• [Practice Exercise: Integrating Your SaaS](https://catalog.workshops.aws/mpseller/en-US/saas/integration)
 
-## Staging ER7 Microservice
+• [Practice Exercise: Enabling SaaS Quick Launch](https://catalog.workshops.aws/mpseller/en-US/saas/quick-launch-integration)
 
-- Lambda “trigger” subscribed to the pub/sub hub, filtering messages by attribute
-- Step Functions Express Workflow to convert ER7 → JSON
-- Two Lambdas:
-  1. Fix ER7 formatting (newline, carriage return)
-  2. Parsing logic
-- Result or error is pushed back into the pub/sub hub
+• [Successfully Testing Your SaaS Listing in AWS Marketplace](https://aws.amazon.com/blogs/awsmarketplace/successfully-testing-your-saas-listing-in-aws-marketplace/)
 
----
+• [Update Product Visibility] [product](https://docs.aws.amazon.com/marketplace/latest/userguide/saas-product-settings.html#saas-update-visibility)
 
-## New Features in the Solution
+## About the Author
 
-### 1. AWS CloudFormation Cross-Stack References
+Pawan Kumar is a Technical Account Manager at Amazon Web Services, specializing in AWS Marketplace solutions and serverless architecture. He develops innovative strategies to address complex customer challenges. He aims to drive cloud adoption across industries. Outside of work, Pawan enjoys playing cricket and following international tournaments.
 
-Example _outputs_ in the core microservice:
-
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
-```
+**TAGS:** [AWS Marketplace](https://aws.amazon.com/blogs/awsmarketplace/category/software/aws-marketplace/), [Best Practices](https://aws.amazon.com/blogs/awsmarketplace/category/post-types/best-practices/), [Foundational (100)](https://aws.amazon.com/blogs/awsmarketplace/category/learning-levels/foundational-100/), [SaaS](https://aws.amazon.com/blogs/awsmarketplace/category/saas/), [Software](https://aws.amazon.com/blogs/awsmarketplace/category/software/)

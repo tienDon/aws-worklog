@@ -20,7 +20,8 @@
         // Lấy ngày hiện tại
         const today = new Date();
         // Định dạng dd-mm-yyyy
-        const formattedDate = today.toLocaleDateString('en-GB');
+        {{/*  const formattedDate = today.toLocaleDateString('en-GB');  */}}
+        const formattedDate = "10/12/2025"; 
         // Gán vào thẻ span
         document.getElementById('lastUpdated').textContent = formattedDate;
     </script>

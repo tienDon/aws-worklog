@@ -1,188 +1,182 @@
 ---
-title: "Event5"
-date: 2025-11-29T08:30:00+07:00
-weight: 1
+title: "Event 6"
+date: "2025-11-17"
+weight: 6
 chapter: false
-pre: " <b> 4.2. </b> "
+pre: " <b> 4.6. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+# Báo cáo Tóm tắt: “Cloud Mastery Series #3: Security on AWS”
 
-# Báo cáo tổng hợp: “AWS Well-Architected – Security Pillar Workshop”
+## Mục tiêu Sự kiện
 
-### Mục tiêu của sự kiện
+### Cung cấp Kiến thức Nền tảng về các Trụ cột Bảo mật của AWS
 
-- Hiểu mô hình **5 trụ cột bảo mật** trong AWS Well-Architected  
-- Nắm các best practice về IAM, detection, data protection và incident response  
-- Tìm hiểu chiến lược phòng tránh các mối đe dọa cloud phổ biến tại Việt Nam  
-- Trải nghiệm demo thực tế như kiểm tra IAM Policy và hệ thống cảnh báo  
+- Giới thiệu năm trụ cột của Khung Bảo mật Kiến trúc Tốt của AWS và giải thích vai trò của Trụ cột Bảo mật trong việc thiết kế kiến ​​trúc đám mây an toàn và bền vững.
 
-### Thời gian & địa điểm
+### Tăng cường Kỹ năng Bảo mật Điện toán đám mây
 
-- **Ngày:** 29/11/2025 (Buổi sáng)  
-- **Giờ:** 08:30 – 12:00  
-- **Địa điểm:** AWS Vietnam Office  
+- Trang bị cho người tham dự kiến ​​thức thiết yếu để xác định rủi ro, xây dựng lớp bảo vệ đa tầng và triển khai các biện pháp bảo mật tiêu chuẩn ngành trên AWS.
 
+### Nâng cao Hiểu biết Thực tiễn thông qua Trình diễn
 
-## Nền tảng bảo mật
+- Giúp người tham dự có được nhận thức thực tiễn thông qua các bản demo như mô phỏng chính sách IAM, các kịch bản phát hiện mối đe dọa, quy trình xử lý sự cố và các kỹ thuật bảo vệ tài nguyên.
 
-- Vai trò của **Security Pillar** trong mô hình Well-Architected  
-- Nguyên tắc cốt lõi: **Least Privilege – Zero Trust – Defense in Depth**  
-- Giải thích sâu về **Mô hình Trách nhiệm Chia sẻ (Shared Responsibility)**  
-- Các mối đe dọa cloud phổ biến tại Việt Nam (S3 lộ dữ liệu, IAM yếu, cấu hình sai)
+### Thúc đẩy Kết nối và Chia sẻ Kiến thức
 
----
+- Khuyến khích sự hợp tác và trao đổi kiến ​​thức trong cộng đồng kỹ sư AWS tại Việt Nam.
 
-## Pillar 1 — Identity & Access Management (IAM)
+### Diễn giả
 
-### Kiến trúc IAM hiện đại (08:50 – 09:30)
+- **Kha Van (AWS)** – Người dẫn chương trình/Điều phối viên
 
-- Loại bỏ credential sống lâu → dùng **IAM Roles**, OIDC federation, temporary tokens  
-- Dùng **IAM Identity Center** cho SSO và quản lý permission tập trung  
-- Tăng cường bảo mật multi-account bằng **SCP** và permission boundaries  
-- Bảo mật nâng cao: **MFA**, credential rotation, Access Analyzer  
-- *Mini Demo:* Kiểm tra IAM policy và mô phỏng truy cập  
+- **Trần Đức Anh**: Thực tập sinh Kỹ sư An ninh đám mây, Đội trưởng Câu lạc bộ Đám mây AWS SGU
 
-**Bài học chính:**  
-→ IAM là lớp phòng thủ đầu tiên; cấu hình sai IAM là nguyên nhân hàng đầu của vi phạm bảo mật cloud.
+- **Nguyên Tuấn Thịnh**: Thực tập sinh Kỹ sư Đám mây
+
+- **Nguyên Đỗ Thanh Đạt**: Thực tập sinh Kỹ sư Đám mây
+
+- **Thịnh Lâm**: FCJer
+
+- **Việt Nguyên**: FCJer
 
 ---
 
-##  Pillar 2 — Giám sát & Phát hiện
+## Điểm nổi bật
 
-### Continuous Monitoring (09:30 – 09:55)
+### Mô hình Trách nhiệm Chia sẻ & Nền tảng An ninh
 
-- Bộ công cụ phát hiện của AWS: **CloudTrail**, **GuardDuty**, **Security Hub**  
-- Bật log trên mọi tầng: VPC Flow Logs, ALB Logs, S3 Access Logs  
-- Xây pipeline cảnh báo qua **EventBridge**  
-- “Detection-as-Code”: đưa luật cảnh báo vào IaC và version control  
+- Làm rõ sự phân chia trách nhiệm giữa AWS và khách hàng.
 
-**Bài học chính:**  
-→ Bảo mật chỉ hiệu quả khi có **giám sát liên tục, đầy đủ và nhất quán**.
+- Giới thiệu các nguyên tắc an ninh cốt lõi: _Quyền hạn tối thiểu_, _Không tin tưởng_ và _Phòng thủ theo chiều sâu_.
+
+- Thảo luận về các lỗ hổng đám mây phổ biến và các mô hình đe dọa được quan sát thấy ở Việt Nam.
+
+### Quản lý Danh tính & Truy cập (IAM)
+
+- Bao gồm Người dùng IAM, Vai trò, Chính sách và các thực tiễn tốt nhất về bảo mật của AWS.
+
+- Trình bày AWS IAM Identity Center (SSO), bộ quyền và quản lý danh tính tập trung.
+
+- Tập trung vào việc thực thi xác thực đa yếu tố (MFA), xoay vòng thông tin xác thực và xác thực chính sách quản trị danh tính (IAM) bằng các công cụ mô phỏng.
+
+### Phát hiện & Giám sát
+
+- CloudTrail ở cấp độ Tổ chức để ghi nhật ký thống nhất.
+
+- GuardDuty để thu thập thông tin tình báo về mối đe dọa và phát hiện các bất thường về hành vi.
+
+- Security Hub để kiểm tra tư thế bảo mật tập trung dựa trên các thực tiễn tốt nhất của CIS và AWS.
+
+- EventBridge được sử dụng để tự động hóa các hành động cảnh báo và khắc phục.
+
+### Bảo vệ Cơ sở hạ tầng
+
+- Bảo mật VPC: phân đoạn, cách ly mạng con, Nhóm bảo mật so với NACL.
+
+- Sử dụng AWS WAF, AWS Shield và AWS Network Firewall.
+
+- Bảo vệ khối lượng công việc: tăng cường bảo mật EC2, quét ảnh container và phát hiện mối đe dọa trong thời gian chạy.
+
+### Bảo vệ Dữ liệu
+
+- Mã hóa dữ liệu khi lưu trữ và khi truyền tải cho S3, EBS, RDS và các dịch vụ AWS khác.
+
+- AWS KMS: chính sách khóa, xoay vòng khóa, cấp quyền và ranh giới quyền hạn.
+
+- Secrets Manager và Parameter Store để quản lý vòng đời bí mật an toàn.
+- Phân loại dữ liệu, các rào cản truy cập và các biện pháp kiểm soát quản trị.
+
+### Ứng phó sự cố
+
+- Giải thích vòng đời ứng phó sự cố AWS và các thực tiễn tốt nhất.
+
+- Xem xét nhiều kịch bản thực tế:
+
+- Thông tin đăng nhập IAM bị xâm phạm
+
+- Các bucket S3 bị lộ công khai
+
+- Phát hiện phần mềm độc hại trong khối lượng công việc trên đám mây
+
+- Trình bày các quy trình làm việc để chụp ảnh nhanh, cách ly, thu thập nhật ký và khôi phục khối lượng công việc.
+
+- Minh họa việc khắc phục tự động bằng Lambda và Step Functions.
 
 ---
 
-##  Pillar 3 — Infrastructure Protection
-
-### Network & Workload Security (10:10 – 10:40)
-
-- Thiết kế VPC: tách biệt public/private subnet  
-- Security Groups vs NACLs: sự khác biệt và cách dùng chuẩn  
-- Bảo vệ mở rộng: **AWS WAF**, **Shield Advanced**, **Network Firewall**  
-- Bảo vệ workload: baseline security cho EC2, ECS, EKS  
-
-**Bài học chính:**  
-→ Phải áp dụng mô hình **bảo vệ đa lớp**, không thể chỉ dựa vào SG hoặc NACL.
-
----
-
-## Pillar 4 — Data Protection
-
-### Mã hóa, Key & Secrets (10:40 – 11:10)
-
-- **KMS**: key policies, grants, rotation  
-- Mã hóa at-rest & in-transit: S3, EBS, RDS, DynamoDB  
-- Sử dụng **Secrets Manager** & Parameter Store thay vì hardcode secrets  
-- Phân loại dữ liệu & guardrails hạn chế truy cập  
-
-**Bài học chính:**  
-→ Mã hóa là yêu cầu bắt buộc; quản lý key đúng cách quan trọng không kém.
-
----
-
-##  Pillar 5 — Incident Response
-
-### Playbook & Tự động hóa (11:10 – 11:40)
-
-- Chu trình IR chuẩn AWS  
-- Playbook thực tế:
-  - Lộ IAM Access Key  
-  - S3 bị public  
-  - EC2 nhiễm malware  
-- Quy trình cô lập: snapshot, quarantine, thu thập chứng cứ  
-- Tự động hóa bằng **Lambda**, **Step Functions**
-
-**Bài học chính:**  
-→ IR phải được **chuẩn bị sẵn**, không thể viết khi sự cố đã xảy ra.
-
----
-
-# Những điều học được
+## Những điểm chính cần ghi nhớ
 
 ### Tư duy bảo mật
 
-- Phòng ngừa quan trọng hơn xử lý  
-- Hạn chế tối đa tài nguyên public-facing  
-- Mọi thứ cần được quản lý bằng **Infrastructure as Code**  
-- Zero Trust là nguyên tắc bắt buộc, không phải tùy chọn
+- Bảo mật là một quá trình liên tục, không phải là thiết lập một lần.
 
-### Kiến thức kỹ thuật
+- Áp dụng nguyên tắc _quyền hạn tối thiểu_ một cách nhất quán và thực thi quyền truy cập dựa trên vai trò.
 
-- Hiểu rõ 3 nguồn dữ liệu phát hiện:  
-  **CloudTrail**, **VPC Flow Logs**, **DNS Logs**  
-- Biết xây dựng quy trình IR từng bước  
-- Áp dụng Network Firewall & DNS Firewall để chặn mối đe dọa chủ động  
-- GuardDuty + Security Hub = hệ thống threat intelligence tự động
+- Xây dựng bảo mật ngay từ giai đoạn thiết kế, không phải sau khi triển khai.
 
-### Kỹ năng thực hành
+### Các thực tiễn tốt nhất về bảo mật đám mây
 
-- Xác thực quyền truy cập bằng Access Analyzer  
-- Cấu hình CloudTrail cấp tổ chức kèm EventBridge  
-- Sử dụng S3 Block Public Access  
-- Mã hóa dữ liệu và xoay vòng secrets  
+- Bật ghi nhật ký bắt buộc: CloudTrail Organization, GuardDuty.
 
----
+- Ưu tiên sử dụng vai trò IAM hơn là khóa truy cập dài hạn.
 
-# Ứng dụng vào công việc
+- Thực thi mã hóa mặc định trên tất cả các dịch vụ.
+- Thực hiện phát hiện sai lệch cấu hình để duy trì tính nhất quán.
 
-- Loại bỏ credential dài hạn, enforce MFA toàn bộ account  
-- Triển khai GuardDuty, Security Hub và logging tập trung  
-- Giảm thiểu tài nguyên public như database, cache, EC2  
-- Bật mã hóa mặc định cho S3, RDS, EBS, DynamoDB  
-- Viết playbook IR cho các kịch bản phổ biến  
-- Tự động hóa quá trình phát hiện → cô lập → khắc phục bằng Lambda  
+### Khả năng quan sát & Phát hiện mối đe dọa
 
----
+- Kết hợp CloudWatch, Security Hub và GuardDuty để có khả năng quan sát chuyên sâu.
 
-# Trải nghiệm sự kiện
+- Sử dụng cảnh báo dựa trên mức độ nghiêm trọng được tích hợp với Slack hoặc email.
 
-Tham dự **AWS Security Pillar Workshop** giúp tôi hiểu rõ hơn về bảo mật cloud theo hướng hiện đại, chuyên sâu và thực tiễn.
+- Triển khai theo dõi phân tán với X-Ray để khắc phục sự cố microservices.
 
-### Ấn tượng từ diễn giả
+### Chuẩn bị ứng phó sự cố
 
-- Các diễn giả chia sẻ nhiều trường hợp thực tế xảy ra tại doanh nghiệp Việt Nam  
-- Nhấn mạnh rằng 80% sự cố cloud đến từ **cấu hình sai**, không phải do AWS  
+- Chuẩn hóa các kịch bản và hướng dẫn xử lý sự cố.
 
-### Hoạt động thực hành
+- Tự động hóa các phản hồi bảo mật cho các sự kiện có rủi ro cao.
 
-- Dùng IAM Access Analyzer để mô phỏng và kiểm tra quyền  
-- Tình huống “S3 public exposure” rất thực tế và gây ấn tượng mạnh  
-- Học cách sử dụng Network Firewall và DNS Firewall để lọc traffic độc hại  
+- Tổ chức các ngày diễn tập bảo mật định kỳ để thực hành các tình huống thực tế.
 
-### Công cụ & tự động hóa
+### Áp dụng vào công việc
 
-- GuardDuty Active Threat Defense cho phép tự động chặn IP độc hại  
-- EventBridge + Lambda tạo thành pipeline phản ứng sự cố hoàn toàn tự động  
-- IaC & Detection-as-Code giúp bảo mật có thể mở rộng theo tổ chức  
+- Đánh giá lại các môi trường hiện tại để tuân thủ Well-Architected.
 
-### Thảo luận & networking
+- Thiết lập bảo mật cơ bản cho IAM, ghi nhật ký, mạng và mã hóa.
 
-- Có cơ hội trao đổi với các chuyên gia AWS và các bạn tham dự  
-- Hiểu thêm các lỗi bảo mật phổ biến trong doanh nghiệp Việt Nam  
-- Thay đổi cách nhìn: Bảo mật là **quy trình liên tục**, không phải cấu hình một lần rồi để đó  
+- Triển khai Security Hub và GuardDuty trên các môi trường đa tài khoản.
 
-### Những bài học nhớ nhất
+- Tích hợp quét vào quy trình CI/CD và container.
 
-- Zero Trust + Least Privilege là nền tảng  
-- Log mọi thứ — nếu không log, bạn không thể điều tra  
-- Tự động hóa giúp giảm thời gian xử lý sự cố  
-- Chuẩn bị IR từ trước sẽ giảm thiểu thiệt hại đáng kể  
+- Tìm hiểu chứng chỉ AWS Security Specialty.
 
 ---
 
-### Một số hình ảnh sự kiện
-*Thêm ảnh sự kiện tại đây*
+## Trải nghiệm sự kiện
 
-> Sự kiện giúp tôi thay đổi tư duy về bảo mật cloud — từ bị động sang chủ động, từ thủ công sang tự động, và từ kỹ thuật đơn lẻ sang quy trình tổng thể theo chuẩn AWS.
+- **Học hỏi từ các chuyên gia AWS:**
+
+Người tham dự được hưởng lợi từ những hiểu biết thực tế, các phương pháp hay nhất và các bản demo thực tiễn do các kỹ sư AWS và các nhà xây dựng cộng đồng trình bày.
+
+- **Học tập thực hành:**
+
+Người tham dự được quan sát các mô phỏng trực tiếp về kiểm tra quyền truy cập IAM, thiết lập ghi nhật ký toàn tổ chức, phát hiện mối đe dọa của GuardDuty và quy trình phản ứng sự cố.
+
+- **Sử dụng hiệu quả các công cụ bảo mật AWS:**
+
+Các công cụ như CloudTrail, GuardDuty, Security Hub, KMS và WAF đã chứng minh cách xây dựng khả năng bảo vệ và giám sát liên tục.
+
+- **Kết nối và tương tác cộng đồng:**
+- Các phiên hỏi đáp và thảo luận nhóm cho phép người tham gia chia sẻ kinh nghiệm, thu được những hiểu biết về nghề nghiệp và điều chỉnh các quyết định kỹ thuật phù hợp với mục tiêu kinh doanh.
+
+### Bài học kinh nghiệm
+
+- Bảo mật đa lớp đảm bảo khả năng phục hồi ngay cả khi một lớp bị lỗi.
+
+- Ghi nhật ký và giám sát là thiết yếu, không phải là tùy chọn.
+
+- Tự động hóa giảm thiểu lỗi do con người và tăng tốc thời gian phản hồi.
+
+- Phân tích sự cố không đổ lỗi và giao tiếp cởi mở giúp các nhóm liên tục cải thiện.
